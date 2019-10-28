@@ -11,7 +11,7 @@ class TOtdels extends Model
     protected $guarded = [];
 
     // Отдел имеет множество пользователей:
-    public function users() {
+    public function getUsers() {
         return $this->hasMany(TUsers::class, 'otdel_id', 'id');
     }
 }

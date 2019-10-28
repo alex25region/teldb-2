@@ -11,7 +11,7 @@ class TPosts extends Model
     protected $guarded = [];
 
     // Должность имеет множество пользователей:
-    public function users() {
+    public function getUsers() {
         return $this->hasMany(TUsers::class, 'post_id', 'id');
     }
 }
