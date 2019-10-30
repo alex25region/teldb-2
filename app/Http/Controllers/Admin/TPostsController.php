@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\TPosts;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,7 +15,8 @@ class TPostsController extends Controller
      */
     public function index()
     {
-        //
+        $posts = TPosts::all();
+        return view ('admin.posts.index', compact('posts'));
     }
 
     /**
@@ -24,7 +26,7 @@ class TPostsController extends Controller
      */
     public function create()
     {
-        //
+        return view ('admin.posts.create');
     }
 
     /**
@@ -35,7 +37,11 @@ class TPostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //TPosts::create($request->all());
+        //return redirect()->route('admin.posts.index');
+        $newpost = new TPosts($request->all());
+        $newpost->save();
+        return redirect()->route('admin.posts.index');
     }
 
     /**
@@ -57,7 +63,8 @@ class TPostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = TPosts::findOrFail($id);
+        return view ('admin.posts.edit', compact('post'));
     }
 
     /**
@@ -69,7 +76,8 @@ class TPostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        TPosts::findOrFail($id)->update($request->all());
+        return redirect()->route('admin.posts.index');
     }
 
     /**
@@ -80,6 +88,7 @@ class TPostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        TPosts::destroy($id);
+        return redirect()->route('admin.post.index');
     }
 }

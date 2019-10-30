@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\TOtdels;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,7 +15,8 @@ class TOtdelsController extends Controller
      */
     public function index()
     {
-        //
+        $otdels = TOtdels::all();
+            return view ('admin.otdels.index',compact('otdels'));
     }
 
     /**
@@ -24,7 +26,9 @@ class TOtdelsController extends Controller
      */
     public function create()
     {
-        //
+        /*$otdels = TOtdels::all();
+        return view ('admin.otdels.create',compact('otdels'));*/
+        return view ('admin.otdels.create');
     }
 
     /**
@@ -35,7 +39,9 @@ class TOtdelsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        TOtdels::create($request->all());
+        return redirect()->route('admin.otdels.index');
+
     }
 
     /**
@@ -57,7 +63,8 @@ class TOtdelsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $otdel = TOtdels::findOrFail($id);
+        return view ('admin.otdels.edit', compact('otdel'));
     }
 
     /**
@@ -69,7 +76,8 @@ class TOtdelsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        TOtdels::findOrFail($id)->update($request->all());
+        return redirect()->route('admin.otdels.index');
     }
 
     /**
@@ -80,6 +88,8 @@ class TOtdelsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        TOtdels::destroy($id);
+        return redirect()->route('admin.otdels.index');
+
     }
 }

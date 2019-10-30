@@ -20,11 +20,11 @@ class TUsers extends Model
 
     // Юзер имеет 1 должность:
     public function getPost() {
-        return $this->hasOne(TPosts::class, 'id', 'post_id');
+        return $this->hasOne(TPosts::class, 'id', 'post_id')->withDefault([ 'post' => 'Не указана должность' ]);
     }
 
     // Юзер имеет 1 отдел:
     public function getOtdel() {
-        return $this->hasOne(TOtdels::class, 'id', 'otdel_id');
+        return $this->hasOne(TOtdels::class, 'id', 'otdel_id')->withDefault([ 'otdel' => 'Не указан отдел' ]);
     }
 }

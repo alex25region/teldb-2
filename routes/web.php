@@ -16,3 +16,20 @@ Route::get('/', function () {
 });
 
 Route::get('/main', 'FrontController@index');
+
+
+$groupData = [
+    'namespace' => 'Admin',
+    'prefix' => 'admin'
+];
+
+Route::group($groupData, function () {
+
+    Route::get('/', 'DashboardController@index');
+    //Users
+    Route::resource('users', 'TUsersController')->names('admin.users');
+    //Posts
+    Route::resource('posts', 'TPostsController')->names('admin.posts');
+    //Otdels
+    Route::resource('otdels', 'TOtdelsController')->names('admin.otdels');
+});

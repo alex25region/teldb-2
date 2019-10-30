@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\TOtdels;
+use App\Models\TPosts;
+use App\Models\TUsers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,7 +17,8 @@ class TUsersController extends Controller
      */
     public function index()
     {
-        //
+        $otdels = TOtdels::with('getUsers.getPost:id,post')->get()->sortBy('id');
+        return view('admin.users.index', compact('otdels'));
     }
 
     /**
@@ -24,7 +28,7 @@ class TUsersController extends Controller
      */
     public function create()
     {
-        //
+        return view ('admin.users.create');
     }
 
     /**
@@ -35,7 +39,8 @@ class TUsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        TUsers::create($request->all());
+        return redirect()->route('admin.users.index');
     }
 
     /**
@@ -57,7 +62,10 @@ class TUsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $posts = TPosts::all();
+        $otdels = TOtdels::all();
+        $user = TUsers::findOrFail($id);
+        return view ('admin.users.edit', compact('user', 'posts', 'otdels'));
     }
 
     /**
@@ -69,7 +77,8 @@ class TUsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        TUsers::findOrFail($id)->update($request->all());
+        return redirect()->route('admin.users.index');
     }
 
     /**
@@ -80,6 +89,7 @@ class TUsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        TUsers::destroy($id);
+        return redirect()->route('admin.users.index');
     }
 }
