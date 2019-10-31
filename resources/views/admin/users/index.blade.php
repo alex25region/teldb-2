@@ -24,8 +24,12 @@
                         <thead>
                             <tr class="thead-dark">
                                 <th colspan="8">
-                                    <div class="text-primary m-2" style="font-size: 135%; font-weight: bold;"> {{ $otdel->otdel }}
-                                        <span class="badge badge-success right"><i class="fa fa-user"></i>&nbsp;{{$otdel->getUsers->count()}}</span></div>
+                                    <div class=" m-2 big" > {{ $otdel->otdel }}
+                                        <span class="badge badge-success right"><i class="fa fa-user"></i>&nbsp;{{$otdel->getUsers->count()}}</span>
+                                        <a href="{{route('admin.otdels.edit', $otdel->id)}}">
+                                        <span class="badge badge-primary"><i class="fa fa-pen"></i>&nbsp;Edit</span>
+                                        </a>
+                                    </div>
 
 {{--                                    <div class="small">{{ $otdel->address }} </div>--}}
 {{--                                    <div class="small">{{ $otdel->telefon }} </div>--}}

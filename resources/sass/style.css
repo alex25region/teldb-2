@@ -1,5 +1,5 @@
 .card {
-    opacity: 0.85;
+    opacity: 0.93;
 }
 
 .navbar {
@@ -13,6 +13,11 @@
 th,td {
     vertical-align: middle !important;
     font-weight: normal;
+}
+.big {
+    color: #e87a2c;
+    font-weight: bold;
+    font-size: 150%;
 }
 
 /*body {*/
