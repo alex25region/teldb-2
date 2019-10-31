@@ -2,13 +2,12 @@
 
 @section('content')
 
-    <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
 
-                <div class="card">
+                <div class="card shadow">
                     <div class="card-header">
-                        Edit User
+                        <h3>Edit User</h3>
                     </div>
                     <div class="card-body card-success">
 
@@ -63,7 +62,11 @@
                                     </select>
                                 </div>
                                 <div class="form-group text-right d-block">
-                                    <button class="btn btn-primary text-uppercase text-center" type="submit">send</button>
+                                    <input type="submit" class="btn btn-lg btn-primary" value="Update"/>
+
+                                    <a href="{{ route('admin.users.index') }}">
+                                       <button  class="btn btn-lg btn-danger">Back</button>
+                                       </a>
                                 </div>
                             </form>
                         </div>
@@ -73,5 +76,4 @@
                 </div>
             </div>
         </div>
-    </div>
 @endsection

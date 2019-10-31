@@ -1,0 +1,99 @@
+﻿Для тестирования моделей и связей очень удобно использовать tinker.
+
+php artisan tinker
+
+$ php artisan tinker 
+> $order = Order::find(1); 
+> var_dump($order->toArray()); 
+> array(...)
+
+Примеры:
+--------
+
+Создать отдел:
+
+>>>$otdel = new TOtdels;
+[!] Aliasing 'TOtdels' to 'App\Models\TOtdels' for this Tinker session.
+=> App\Models\TOtdels {#3039}
+>>> $otdel->otdel = 'test';
+=> "test"
+>>> $otdel->address = 'test';
+=> "test"
+>>> $otdel->telefon = 'test';
+=> "test"
+>>> $otdel->email = 'test';
+=> "test"
+>>> $otdel->save();
+=> true
+
+Обновить отдел:
+
+>>> $otdel = TOtdels::find(42);
+=> App\Models\TOtdels {#3038
+     id: 42,
+     otdel: "test",
+     address: "test",
+     telefon: "test",
+     email: "test",
+     created_at: "2019-10-22 06:24:06",
+     updated_at: "2019-10-22 06:24:06",
+     deleted_at: null,
+   }
+>>> $otdel->otdel = 'TEST';
+=> "TEST"
+>>> $otdel->update();
+=> true
+
+Удалить отдел:
+
+>>> TOtdels::destroy(42);
+=> 1
+
+------------------------------------------------------------------------------------------------
+Тестирование связей:
+
+>>> $user = TUsers::find(10);
+[!] Aliasing 'TUsers' to 'App\Models\TUsers' for this Tinker session.
+=> App\Models\TUsers {#3032
+     id: 10,
+     surname: "Морозов",
+     firstname: "Зоя",
+     secondname: "Платон",
+     post_id: 2,
+     iptel: 1090,
+     tel: "8-800-101-1330",
+     otdel_id: 32,
+     created_at: "2019-09-01 22:02:47",
+     updated_at: "2019-09-01 22:02:47",
+     deleted_at: null,
+   }
+t: null,
+   }
+>>> $user->getPost->post;
+=> "Бармен"
+
+>>> $user->getOtdel->otdel;
+=> "Наименование отдела"
+
+---
+
+>>>$otdels = TOtdels::find(4);  //выбирет отдел с id=4
+>>>$otdels->getUsers;           //выведет пользователей, принадлежащих отделу:
+=> Illuminate\Database\Eloquent\Collection {#3877
+     all: [
+       App\Models\TUsers {#3878
+         id: 1,
+         surname: "Третьяков",
+         firstname: "Георгий",
+         secondname: "Тарас",
+         post_id: 8,
+         iptel: 1374,
+         tel: "(35222) 30-6684",
+         otdel_id: 4,
+         created_at: "2019-09-01 22:02:47",
+         updated_at: "2019-09-01 22:02:47",
+         deleted_at: null,
+         }
+...
+]
+

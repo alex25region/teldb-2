@@ -1,0 +1,22 @@
+.card {
+    opacity: 0.85;
+}
+
+.navbar {
+    opacity: 0.85;
+}
+
+.container {
+    padding-top: 90px;
+}
+
+th,td {
+    vertical-align: middle !important;
+    font-weight: normal;
+}
+
+/*body {*/
+/*    color: #fff;*/
+/*    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);*/
+/*}*/
+

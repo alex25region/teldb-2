@@ -1,17 +1,26 @@
 @extends('admin.layouts.app')
 
 @section('content')
-    <section class="content">
-        <div class="content-wrapper">
-            <div class="form-group d-block">
-                <a href="{{route('admin.posts.create')}}" class="btn btn-success text-center">Create</a>
+    <form>
+        <div class="row justify-content-end mb-3">
+            <div class="col-3">
+                <input type="text" class="form-control shadow" placeholder="Search..." aria-label="Search...">
             </div>
-            <div class="row justify-content-center">
+            <div class="col-2">
+                <a class="btn btn-md btn-success shadow" href="{{route('admin.users.create')}}">Add Row</a>
+            </div>
+        </div>
+    </form>
 
-                <div class="col-md-11">
-                    <table class="table table-bordered table-sm table-striped">
-                        <tr class="thead-light">
-                            <th>IS</th>
+    <div class="row justify-content-center ">
+        <div class="card shadow">
+            <div class="card-header">
+                <h2>Table - Posts</h2>
+            </div>
+            <div class="card-body">
+                    <table class="table table-sm table-bordered table-striped table-hover text-center">
+                        <tr class="thead-dark">
+                            <th>ID</th>
                             <th>Должность</th>
                             <th>Создан</th>
                             <th>Обновлен</th>
@@ -19,19 +28,25 @@
                         </tr>
                         @forelse($posts as $post)
                             <tr>
-                                <th scope="row"> {{ $post->id }} </th>
+                                <td> {{ $post->id }} </td>
                                 <td> {{ $post->post }} </td>
                                 <td> {{ $post->created_at }} </td>
                                 <td> {{ $post->updated_at}} </td>
-                                <td class="d-flex">
-                                    <a href="{{route('admin.posts.edit', $post->id)}}" class="btn btn-sm btn-primary btn-block text-white">
-                                        Edit
-                                    </a>
-                                    <form action="{{ route('admin.posts.destroy', $post->id) }}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <input type="submit" class="btn btn-sm btn-block btn-danger" value="Delete" onclick="return confirm('Are you sure?')"/>
-                                    </form>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a href="{{ route('admin.posts.edit', $post->id)}}">
+                                            <button type="button" class="btn btn-sm btn-primary mr-1 shadow">Edit</button>
+                                        </a>
+                                        <form action="{{ route('admin.posts.destroy', $post->id) }}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger shadow"
+                                                    onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+
+
                                 </td>
                             </tr>
                             @empty
@@ -42,7 +57,7 @@
                     </table>
                 </div>
             </div>
-        </div>
-    </section>
+    </div>
+
 
 @endsection

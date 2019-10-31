@@ -1,13 +1,11 @@
 @extends('admin.layouts.app')
 
 @section('content')
-    <main role="main" class="mt-4">
         <div class="row">
-            <h1 class="h2">Dashboard</h1>
-            <br>
+            <h1>Dashboard</h1>
         </div>
         <div class="row">
-            <div class="card">
+            <div class="card w-25">
                 <div class="card-header">
                     Statistics
                 </div>
@@ -18,5 +16,4 @@
                 </ul>
             </div>
         </div>
-    </main>
 @endsection

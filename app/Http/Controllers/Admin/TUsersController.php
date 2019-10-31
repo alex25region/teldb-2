@@ -17,6 +17,7 @@ class TUsersController extends Controller
      */
     public function index()
     {
+        //$otdels = TOtdels::with('getUsers.getPost:id,post')->get()->sortBy('id');
         $otdels = TOtdels::with('getUsers.getPost:id,post')->get()->sortBy('id');
         return view('admin.users.index', compact('otdels'));
     }
@@ -28,7 +29,9 @@ class TUsersController extends Controller
      */
     public function create()
     {
-        return view ('admin.users.create');
+        $posts = TPosts::all();
+        $otdels = TOtdels::all();
+        return view ('admin.users.create',compact('posts', 'otdels'));
     }
 
     /**
@@ -41,6 +44,7 @@ class TUsersController extends Controller
     {
         TUsers::create($request->all());
         return redirect()->route('admin.users.index');
+        //return redirect()->route('admin.users.index')->with('success', 'Contact saved!'); //протестить сообщения
     }
 
     /**
@@ -51,7 +55,8 @@ class TUsersController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = TUsers::findOrFail($id);
+        return view ('admin.users.show', compact('user'));
     }
 
     /**

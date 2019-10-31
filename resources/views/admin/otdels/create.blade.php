@@ -1,12 +1,11 @@
 @extends('admin.layouts.app')
 
 @section('content')
-    <div class="container mt-2">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <div class="card">
+                <div class="card shadow">
                     <div class="card-header">
-                        Create Otdel
+                        <h3>Create Otdel</h3>
                     </div>
                     <div class="card-body card-success">
 
@@ -34,7 +33,7 @@
                                 </div>
 
                                 <div class="form-group text-right d-block">
-                                    <button class="btn btn-success text-center" type="submit">Create</button>
+                                    <button class="btn btn-success btn-lg text-center" type="submit">Create</button>
                                 </div>
                             </form>
                         </div>
@@ -42,6 +41,4 @@
                 </div>
             </div>
         </div>
-    </div>
-
 @endsection

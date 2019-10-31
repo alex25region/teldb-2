@@ -1,0 +1,26 @@
+﻿Созданы контроллеры и роуты.
+
+Создаем views.
+
+Создадим папку admin в папке resources/views.
+
+Схема папок:
+admin
+   layouts
+	app.blade.php
+	messages.blade.php
+   otdels
+	create.blade.php
+	edit.blade.php
+	index.blade.php
+   posts
+	create.blade.php
+	edit.blade.php
+	index.blade.php
+   users
+	create.blade.php
+	edit.blade.php
+	index.blade.php
+	show.blade.php
+front
+

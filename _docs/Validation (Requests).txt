@@ -1,0 +1,94 @@
+=== Валидация данных и форм ===
+
+Например при методе Update
+ 1 Способ:
+
+ public function update(Request $request, $id) {
+          $rules = [
+            'title' => 'required|min:5|max:200',
+            'slug' => 'max:200',
+            'description' => 'string|max:500|min:3',
+            'paren_id' => 'required|integer|exists:blog_categories,id', // exists - значение должно находиться в др.таблице
+        ];
+
+        $validatedData = $this->validate($request, $rules);
+        // или так  $validatedData = $request->validate($rules);
+
+        dd($validatedData);
+        }
+
+
+2 Способ:
+    Непосредственное обращение к Validator.
+        public function update(Request $request, $id) {
+
+                $rules = [
+                            'title' => 'required|min:5|max:200',
+                            'slug' => 'max:200',
+                            'description' => 'string|max:500|min:3',
+                            'paren_id' => 'required|integer|exists:blog_categories,id',
+                        ];
+
+                $validator = \Validator::make($request->all(), $rules);
+
+                // далее разные методы
+                $validatedData[] = $validator->passes();
+                $validatedData[] = $validator->validate();
+                $validatedData[] = $validator->valid();
+                $validatedData[] = $validator->failed();
+                $validatedData[] = $validator->errors();
+                $validatedData[] = $validator->fails();
+
+                dd($validatedData);
+                }
+
+3 Способ (самый правильный):
+    Создать app/Http/Requests/BlogCategoryUpdateRequest.php командой, где прописываются условия, даже про авторизацию:
+
+    php artisan make:request BlogCategoryUpdateRequest
+
+Содержимое app/Http/Requests/BlogCategoryUpdateRequest.php:
+#--------------------------------------------------------------------------------------------------#
+    <?php
+
+    namespace App\Http\Requests;
+
+    use Illuminate\Foundation\Http\FormRequest;
+
+    class BlogCategoryUpdateRequest extends FormRequest
+    {
+        /**
+         * Determine if the user is authorized to make this request.
+         *
+         * @return bool
+         */
+        public function authorize()
+        {
+            return true;
+            //return auth()->check();
+            //return true;
+
+        }
+
+        /**
+         * Get the validation rules that apply to the request.
+         *
+         * @return array
+         */
+        public function rules()
+        {
+            return [
+                'title' => 'required|min:5|max:200',
+                'slug' => 'max:200',
+                'description' => 'string|max:500|min:3',
+                'parent_id' => 'required|integer|exists:blog_categories,id',
+            ];
+        }
+    }
+#--------------------------------------------------------------------------------------------------#
+
+Далее в функиции Update поменять
+
+public function update (BlogCategoryUpdateRequest $request, $id) {
+    ...
+    }

@@ -1,36 +1,34 @@
 @extends('admin.layouts.app')
 
 @section('content')
-    <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
 
-                <div class="card">
+                <div class="card shadow">
                     <div class="card-header">
-                        Create User
+                        <h3>Create User</h3>
                     </div>
-                    <div class="card-body card-success">
-                        <div class="text-left contact-clean">
-
+                    <div class="card-body">
                             <form action="{{ route('admin.users.store') }}" method="post">
+                                @csrf
                                 <div class="form-group">
                                     <label for="surname">Фамилия</label>
-                                    <input type="text" class="form-control" id="surname" name="surname"/>adsd
+                                    <input type="text" class="form-control" id="surname" name="surname"/>
                                 </div>
                                 <div class="form-group inline">
-                                    <label for="name">Имя</label>
-                                    <input type="text" class="form-control" id="name" name="name"/>
+                                    <label for="firstname">Имя</label>
+                                    <input type="text" class="form-control" id="firstname" name="firstname"/>
                                 </div>
                                 <div class="form-group">
                                     <label class="inline" for="secondname">Отчество</label>
                                     <input type="text" class="form-control" id="secondname" name="secondname"/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="post">Должность</label>
-                                    <select class="form-control" id="post" name="post">
+                                    <label for="post_id">Должность</label>
+                                    <select class="form-control" id="post_id" name="post_id">
 
                                         @foreach($posts as $post)
-                                            <option value="{{ $post->post }}">{{ $post->post }}</option>
+                                            <option value="{{ $post->id }}">{{ $post->post }}</option>
                                         @endforeach
 
                                     </select>
@@ -39,29 +37,27 @@
                                     <label class="inline" for="iptel">IP-Телефон</label>
                                     <input type="text" class="form-control" id="iptel" name="iptel"  placeholder/>
                                 </div>
-                                <div class="form-group"><label for="telefon">Телефон</label>
-                                    <input type="text" class="form-control" id="telefon" name="telefon"/>
+                                <div class="form-group"><label for="tel">Телефон</label>
+                                    <input type="text" class="form-control" id="tel" name="tel"/>
                                 </div>
-                                <div class="form-group"><label for="otdel">Отдел</label>
-                                    <select class="form-control" id="otdel" name="otdel">
+                                <div class="form-group"><label for="otdel_id">Отдел</label>
+                                    <select class="form-control" id="otdel_id" name="otdel_id">
 
                                         @foreach($otdels as $otdel)
-                                            <option value="{{ $otdel->otdel }}">{{ $otdel->otdel }}</option>
+                                            <option value="{{ $otdel->id }}">{{ $otdel->otdel }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group text-right d-block">
-                                    <button class="btn btn-primary text-uppercase text-center" type="submit">Create</button>
+                                    <button class="btn btn-lg btn-primary " type="submit">Create</button>
+                                    <a href="{{ route('admin.users.index') }}" button class="btn btn-lg text btn-danger">Back</button>
+                                    </a>
                                 </div>
                             </form>
                         </div>
-
-
-
-                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
 
 @endsection

@@ -1,0 +1,42 @@
+Repositories
+
+Репозиторий — это абстрактный слой между каким-либо хранилищем и вашим приложением или бизнес-логикой.
+Это примерно то же, как если бы вы могли подойти к полке для книг и взять нужные из них одним движением руки.
+Итак, давайте посмотрим на задачи, которые мы хотим решить взаимодействием между хранилищем данных или слоем постоянного хранилища.
+
+    - Выборка всех заданных вопросов
+    - Создание пустого вопроса для связывания формы в представлении
+    - Страничный вывод запросов
+    - Создание и хранение вопроса
+    - Выборка вопросов по первичному ключу
+    - Обновление вопроса с первичным ключом и некоторым массивом данных
+    - Удаление вопроса по первичному ключу
+
+Чтобы в artisan повилась команда make:repository необходимо установить:
+
+    composer require jason-guru/laravel-make-repository --dev
+
+Теперь можно проверить появилась ли команда:
+    php artisan help make:repository
+
+Создать репозиторий:
+    php artisan make:repository BlogCategoryRepository
+
+В контроллере в методе edit:
+
+public function edit($id, BlogCategoryRepository $categoryRepository)
+    {
+        //dd(__METHOD__);
+        //$item = BlogCategory::FindOrFail($id);
+        //$categoryList = BlogCategory::all();
+        $item = $this->blogCategoryRepository->getEdit($id);
+        if (empty($item)){
+            abort(404);
+        }
+
+        $categoryList
+            = $this->blogCategoryRepository->getForComboBox();
+
+        return view('blog.admin.categories.edit',
+            compact('item', 'categoryList'));
+    }

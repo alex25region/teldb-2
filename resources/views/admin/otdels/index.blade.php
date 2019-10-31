@@ -2,15 +2,26 @@
 
 @section('content')
 
-    <div class="content-wrapper">
-        <div class="row justify-content-center">
-            <div class="col-auto">
+    <form>
+        <div class="row justify-content-end mb-3">
+            <div class="col-3">
+                <input type="text" class="form-control shadow" placeholder="Search..." aria-label="Search...">
+            </div>
+            <div class="col-2">
+                <a class="btn btn-md btn-success shadow" href="{{route('admin.otdels.create')}}">Add Row</a>
+            </div>
+        </div>
+    </form>
 
-                <div class="form-group d-block">
-                    <a href="{{route('admin.otdels.create')}}" class="btn btn-success text-center">Create</a>
-                </div>
-                <table class="table table-sm table-striped">
-                    <tr class="thead-light text-center">
+    <div class="row justify-content-center ">
+
+        <div class="card shadow">
+            <div class="card-header">
+                <h2>Table - Otdels</h2>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm table-bordered table-striped table-hover text-center">
+                    <tr class="thead-dark">
                         <th>ID</th>
                         <th>Отдел</th>
                         <th>Адрес</th>
@@ -29,15 +40,20 @@
                             <td> {{ $otdel->email }} </td>
                             <td> {{ $otdel->created_at }} </td>
                             <td> {{ $otdel->updated_at}} </td>
-                            <td class="d-flex">
-                                <a href="{{route('admin.otdels.edit', $otdel->id)}}" class="btn btn-sm btn-primary btn-block text-white">
-                                    Edit
+                            <td>
+                                <div class="btn-group" role="group">
+                                <a href="{{ route('admin.otdels.edit', $otdel->id)}}">
+                                    <button type="button" class="btn btn-sm btn-primary mr-1 shadow">Edit</button>
                                 </a>
                                 <form action="{{ route('admin.otdels.destroy', $otdel->id) }}" method="post">
                                     @csrf
                                     @method('DELETE')
-                                    <input type="submit" class="btn btn-sm btn-block btn-danger" value="Delete" onclick="return confirm('Are you sure?')"/>
+                                    <button type="submit" class="btn btn-sm btn-danger shadow"
+                                            onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i>
+                                    </button>
                                 </form>
+                                </div>
+
                             </td>
                         </tr>
                     @empty
@@ -49,4 +65,5 @@
             </div>
         </div>
     </div>
+
 @endsection

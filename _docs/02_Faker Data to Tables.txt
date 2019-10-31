@@ -1,0 +1,138 @@
+ГЕНЕРИРОВАНИЕ ФЕЙКОВЫХ ДАННЫХ В LARAVEL
+
+Пути:
+database/factories
+database/seeds
+
+Создание Factory:
+    php artisan make:factory TPostsFactory --model=TPosts
+    php artisan make:factory TOtdelsFactory --model=TOtdels
+    php artisan make:factory TUsersFactory --model=TUsers
+
+Содержимое database/factories/TPostsFactory.php
+--------------------------------------------------------------------------
+        <?php
+
+        /** @var \Illuminate\Database\Eloquent\Factory $factory */
+
+        use App\Models\TPosts;
+        use Faker\Generator as Faker;
+
+        $factory->define(TPosts::class, function (Faker $faker) {
+
+            // поля в базе:
+            // $table->increments('id');
+            // $table->string('post', 100)->unique();
+
+            $faker = \Faker\Factory::create('ru_RU'); // Локализация (русские фейковые значения)
+
+            return [
+                'post' => $faker->jobTitle,
+            ];
+        });
+--------------------------------------------------------------------------
+
+Содержимое database/factories/TOtdelsFactory.php
+--------------------------------------------------------------------------
+        <?php
+
+        /** @var \Illuminate\Database\Eloquent\Factory $factory */
+
+        use App\Models\TOtdels;
+        use Faker\Generator as Faker;
+
+        $factory->define(TOtdels::class, function (Faker $faker) {
+
+            // поля в базе:
+            // $table->increments('id');
+            // $table->string('otdel')->unique();
+            // $table->string('address');
+            // $table->string('telefon', 50);
+            // $table->string('email');
+
+            // Локализация (русские значения):
+            $faker = \Faker\Factory::create('ru_RU');
+
+            return [
+                'otdel' => $faker->sentence(rand(3, 8), true),
+                'address' => $faker->address,
+                'telefon' => $faker->phoneNumber,
+                'email' => $faker->unique()->safeEmail,
+            ];
+        });
+--------------------------------------------------------------------------
+
+Содержимое database/factories/TUserFactory.php
+--------------------------------------------------------------------------
+        <?php
+
+        /** @var \Illuminate\Database\Eloquent\Factory $factory */
+
+        use Faker\Generator as Faker;
+        use App\Models\TUsers;
+        use App\Models\TPosts;
+        use App\Models\TOtdels;
+
+        $factory->define(TUsers::class, function (Faker $faker) {
+
+            // поля в базе:
+            // $table->increments('id');
+            // $table->string('surname', 30);
+            // $table->string('firstname', 30);
+            // $table->string('secondname', 30);
+            // $table->unsignedInteger('post_id');
+            // $table->smallInteger('iptel')->nullable();
+            // $table->string('tel', 50)->nullable();
+            // $table->unsignedInteger('otdel_id');
+
+            $faker = \Faker\Factory::create('ru_RU');
+            $data = [
+                'surname' => $faker->lastName,
+                'firstname' => $faker->firstName,
+                'secondname' => $faker->firstName,
+                'iptel' => rand(1000,1999),
+                'tel' => $faker->phoneNumber,
+                'post_id' => function () {
+                    return TPosts::inRandomOrder()->first()->id;
+                },
+                'otdel_id' => function () {
+                return TOtdels::inRandomOrder()->first()->id;
+                }
+            ];
+
+            return $data;
+        });
+--------------------------------------------------------------------------
+
+ДАЛЕЕ в файле database/seeds/DatabaseSeeder.php в функции RUN указать фабрики для запуска создания
+фейковых значений в таблицах.
+
+database/seeds/DatabaseSeeder.php
+--------------------------------------------------------------------------
+    <?php
+
+    use Illuminate\Database\Seeder;
+    use App\Models\TPosts;
+    use App\Models\TOtdels;
+    use App\Models\TUsers;
+
+    class DatabaseSeeder extends Seeder
+    {
+        /**
+         * Seed the application's database.
+         *
+         * @return void
+         */
+        public function run()
+        {
+            // $this->call(UsersTableSeeder::class);
+
+            factory(TPosts::class, 10)->create();
+            factory(TOtdels::class, 40)->create();
+            factory(TUsers::class, 350)->create();
+        }
+    }
+--------------------------------------------------------------------------
+
+Удаление всех таблиц, создание заново и заполение фейковыми данными:
+    php artisan migrate:refresh --seed

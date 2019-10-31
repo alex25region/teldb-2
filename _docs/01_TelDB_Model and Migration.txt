@@ -1,0 +1,193 @@
+﻿#=== БАЗА ДАННЫХ ===
+
+Необходимо создать базу данных и настроить подключение к ней в файле .env
+
+В mysql workbench -> create schemas -> указываем имя и кодировку utf8 и utf8_general_ci
+
+В файле .env указать параметры подключения к БД:
+	DB_CONNECTION=mysql
+	DB_HOST=127.0.0.1
+	DB_PORT=3306
+	DB_DATABASE=laravel-teldb
+	DB_USERNAME=root
+	DB_PASSWORD=***
+
+==================
+
+Устраняем ошибки при выполнении migration!
+
+app/Providers/AppServiceProvider.php
+#---------------------------------------------------------------------------#
+<?php
+
+namespace App\Providers;
+
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;		// добавить это
+
+class AppServiceProvider extends ServiceProvider
+{
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //
+    }
+
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        Schema::defaultStringLength(191);		// добавить это
+    }
+}
+#---------------------------------------------------------------------------#
+
+=== Содание моделей с миграциями ===
+
+!!!Важно создавать модели и миграции в определенной последовательности!!!
+!!!Так как в миграции идет создание foreignkey!!!
+
+Сначала создадим модели Posts (Должности) и Otdels (Отделы).
+
+php artisan make:model Models\TPosts -m
+php artisan make:model Models\TOtdels -m
+php artisan make:model Models\TUsers -m
+
+Создадутся файлы:
+app/Models/TOtdels.php
+app/Models/TPosts.php
+app/Models/TUsers.php
+database/migrations/2019_08_22_000951_create_t_posts_table.php
+database/migrations/2019_08_22_001039_create_t_otdels_table.php
+database/migrations/2019_08_22_004332_create_t_users_table.php
+
+Запуск миграций:
+php artisan migrate
+
+Запуск миграций с удалением таблиц (Эта команда эффективно воссоздает всю вашу базу данных):
+php artisan migrate:refresh
+
+Удаление таблиц:
+php artisan migrate:rollback
+
+=== Редактирование моделей ===
+
+Модели связаны с таблицами, соответсвенно можно указать какую таблицу использовать:
+protected $table = 'имя таблицы';
+
+В моделях необходимо первым делом указать поля таблиц которые будут обновляться.
+Служебные поля ID, created_at, updated_at и т.п. заполняются автоматически!
+
+2 способа:
+    1. Указать перечень необходимы полей:
+
+        protected $fillable = [
+                    'otdel',
+                    'address',
+                    'telefon',
+                    'email',
+                ];
+
+    2. Наоборот указать какие поле не будут вовлечены в обновление (все остальные будут):
+
+        protected $guarded = [
+
+                ];
+
+!!!  Поля id, created_at и update_at - не указывать, они заполняются автоматически. !!!
+
+=== Редактирование моделей. Связи ===
+
+Также в моделях можно указать связи.
+Типы связей:
+    - один-ко-многим    (hasMany)
+    - один-к-одному     (hasOne)
+    - многие-ко-многими (belongsToMany)
+    - сквозная связь    (hasManyThrough)
+
+Например, Юзер имеет 1 должность и 1 отдел, указываем в модели User (app/Models/TUsers.php):
+----------------------------------------------------------------------------------------
+        <?php
+
+        namespace App\Models;
+        use Illuminate\Database\Eloquent\Model;
+
+        class TUsers extends Model
+        {
+            // Указываем поля которые могут быть заполнены:
+
+            protected $fillable = [
+                'surname',
+                'firstname',
+                'secondname',
+                'post_id',
+                'iptel',
+                'tel',
+                'otdel_id'
+            ];
+
+            // Юзер имеет 1 должность:
+                public function getPost() {
+                    return $this->hasOne(TPosts::class,'id', 'post_id');
+                }
+
+                // Юзер имеет 1 отдел:
+                public function getOtdel() {
+                   return $this->hasOne(TOtdels::class,'id', 'otdel_id');
+        }
+----------------------------------------------------------------------------------------
+
+app/Models/TPosts.php
+----------------------------------------------------------------------------------------
+        <?php
+
+        namespace App\Models;
+        use Illuminate\Database\Eloquent\Model;
+
+        class TPosts extends Model
+        {
+            // поля в базе:
+            // $table->increments('id');
+            // $table->string('post', 100)->unique();
+
+            
+	    // Должность имеет множество пользователей:
+	    public function getUsers() {
+                 return $this->hasMany(TUsers::class, 'post_id', 'id');
+            }
+        }
+----------------------------------------------------------------------------------------
+
+app/Models/TOtdels.php
+----------------------------------------------------------------------------------------
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class TOtdels extends Model
+{
+    // поля в базе:
+    // $table->increments('id');
+    // $table->string('otdel')->unique();
+    // $table->string('address');
+    // $table->string('telefon', 50);
+    // $table->string('email');
+
+   // Отдел имеет много юзеров:
+    public function getUsers() {
+        return $this->hasMany(TUsers::class, 'otdel_id', 'id');
+    }
+
+    Читаем дальше в Eloquent (Relationships).txt
+
+}
+----------------------------------------------------------------------------------------
