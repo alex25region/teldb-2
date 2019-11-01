@@ -1,6 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('content')
+    @include('admin.layouts.messages')
     <form>
         <div class="row justify-content-end mb-3">
             <div class="col-3">
@@ -25,7 +26,7 @@
                             <tr class="thead-dark">
                                 <th colspan="8">
                                     <div class=" m-2 big" > {{ $otdel->otdel }}
-                                        <span class="badge badge-success right"><i class="fa fa-user"></i>&nbsp;{{$otdel->getUsers->count()}}</span>
+                                        <span class="badge badge-success"><i class="fa fa-user"></i>&nbsp;{{$otdel->getUsers->count()}}</span>
                                         <a href="{{route('admin.otdels.edit', $otdel->id)}}">
                                         <span class="badge badge-primary"><i class="fa fa-pen"></i>&nbsp;Edit</span>
                                         </a>

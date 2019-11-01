@@ -34,6 +34,7 @@
 
                                 <div class="form-group text-right d-block">
                                     <button class="btn btn-success btn-lg text-center" type="submit">Create</button>
+                                    <a href="{{ route('admin.otdels.index') }}" class="btn btn-lg text btn-danger">Back</a>
                                 </div>
                             </form>
                         </div>

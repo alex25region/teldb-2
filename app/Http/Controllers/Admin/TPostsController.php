@@ -42,12 +42,12 @@ class TPostsController extends Controller
     public function update(Request $request, $id)
     {
         TPosts::findOrFail($id)->update($request->all());
-        return redirect()->route('admin.posts.index');
+        return redirect()->route('admin.posts.index')->with('success', 'Record updated!');
     }
 
     public function destroy($id)
     {
         TPosts::destroy($id);
-        return redirect()->route('admin.posts.index');
+        return redirect()->route('admin.posts.index')->with('success', 'Record success deleted!');
     }
 }

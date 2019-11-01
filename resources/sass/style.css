@@ -1,15 +1,27 @@
+a.menu-item{
+    color: white !important;
+    font-weight: normal;
+    font-size: 120%;
+    opacity: 0.93;
+}
+a.menu-item:hover {
+    /*color: lawngreen !important;*/
+    background: #4b9500 !important;
+}
+a.menu-item:hover:active {
+    color: greenyellow !important;
+}
+
 .card {
     opacity: 0.93;
 }
-
 .navbar {
     opacity: 0.85;
 }
-
 .container {
     padding-top: 90px;
+    padding-bottom: 100px;
 }
-
 th,td {
     vertical-align: middle !important;
     font-weight: normal;

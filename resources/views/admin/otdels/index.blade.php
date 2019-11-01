@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('content')
-
+    @include('admin.layouts.messages')
     <form>
         <div class="row justify-content-end mb-3">
             <div class="col-3">
@@ -12,7 +12,6 @@
             </div>
         </div>
     </form>
-
     <div class="row justify-content-center ">
 
         <div class="card shadow">
@@ -20,7 +19,7 @@
                 <h2>Table - Otdels</h2>
             </div>
             <div class="card-body">
-                <table class="table table-sm table-bordered table-striped table-hover text-center">
+                <table class="table table-bordered table-striped table-hover text-center">
                     <tr class="thead-dark">
                         <th>ID</th>
                         <th>Отдел</th>

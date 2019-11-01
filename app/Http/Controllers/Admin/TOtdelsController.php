@@ -16,7 +16,7 @@ class TOtdelsController extends Controller
     public function index()
     {
         $otdels = TOtdels::all();
-            return view ('admin.otdels.index',compact('otdels'));
+            return view ('admin.otdels.index',compact('otdels'))->with('failure', 'asdsad');
     }
 
     /**
@@ -77,7 +77,7 @@ class TOtdelsController extends Controller
     public function update(Request $request, $id)
     {
         TOtdels::findOrFail($id)->update($request->all());
-        return redirect()->route('admin.otdels.index');
+        return redirect()->route('admin.otdels.index')->with('success', 'Record updated!');
     }
 
     /**
@@ -89,7 +89,7 @@ class TOtdelsController extends Controller
     public function destroy($id)
     {
         TOtdels::destroy($id);
-        return redirect()->route('admin.otdels.index');
+        return redirect()->route('admin.otdels.index')->with('success', 'Record success deleted!');
 
     }
 }

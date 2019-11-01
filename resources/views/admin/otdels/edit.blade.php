@@ -34,9 +34,9 @@
                                     <input type="text" class="form-control" id="email" name="email" value="{{$otdel->email}}"/>
                                 </div>
                                 <div class="form-group text-right d-block">
+                                    <input type="submit" class="btn btn-lg btn-primary" value="Update"/>
                                     <a href="{{ route('admin.otdels.index') }}" class="btn btn-lg btn-danger">Back</a>
                                     {{--<button class="btn btn-primary text-center" type="submit">Update</button>--}}
-                                    <input type="submit" class="btn btn-lg btn-primary" value="Update"/>
                                 </div>
                             </form>
                         </div>

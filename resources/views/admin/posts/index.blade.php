@@ -1,13 +1,14 @@
 @extends('admin.layouts.app')
 
 @section('content')
+    @include('admin.layouts.messages')
     <form>
         <div class="row justify-content-end mb-3">
             <div class="col-3">
                 <input type="text" class="form-control shadow" placeholder="Search..." aria-label="Search...">
             </div>
             <div class="col-2">
-                <a class="btn btn-md btn-success shadow" href="{{route('admin.users.create')}}">Add Row</a>
+                <a class="btn btn-md btn-success shadow" href="{{route('admin.posts.create')}}">Add Row</a>
             </div>
         </div>
     </form>
@@ -18,7 +19,7 @@
                 <h2>Table - Posts</h2>
             </div>
             <div class="card-body">
-                    <table class="table table-sm table-bordered table-striped table-hover text-center">
+                    <table class="table table-bordered table-striped table-hover text-center">
                         <tr class="thead-dark">
                             <th>ID</th>
                             <th>Должность</th>

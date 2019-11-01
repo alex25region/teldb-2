@@ -17,17 +17,17 @@
 {{--    <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">--}}
     <ul class="nav">
         <li class="nav-item">
-            <a class="nav-link text-white" href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i>&nbsp;Home</a>
+            <a class="nav-link menu-item" href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i>&nbsp;Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-white" href="{{ route('admin.users.index') }}"><i class="fa fa-users"></i>&nbsp;Users</a>
+            <a class="nav-link menu-item" href="{{ route('admin.users.index') }}"><i class="fa fa-users"></i>&nbsp;Users</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-white" href="{{ route('admin.posts.index') }}"><i class="fa fa-address-card"></i>&nbsp;Posts</a>
+            <a class="nav-link menu-item" href="{{ route('admin.posts.index') }}"><i class="fa fa-address-card"></i>&nbsp;Posts</a>
         </li>
         <li class="nav-item">
 
-            <a class="nav-link text-white" href="{{ route('admin.otdels.index') }}"><i class="fa fa-building"></i>&nbsp;Otdels</a>
+            <a class="nav-link menu-item" href="{{ route('admin.otdels.index') }}"><i class="fa fa-building"></i>&nbsp;Otdels</a>
         </li>
     </ul>
 
@@ -44,6 +44,7 @@
         @yield('content')
     </div>
 </div>
-
+<script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('js/boostrap.js') }}"></script>
 </body>
 </html>

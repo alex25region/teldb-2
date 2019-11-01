@@ -17,6 +17,7 @@
                                 </div>
                                 <div class="form-group text-right d-block">
                                     <button class="btn btn-success btn-lg" type="submit">Create</button>
+                                    <a href="{{ route('admin.posts.index') }}" class="btn btn-lg text btn-danger">Back</a>
                                 </div>
                             </form>
                         </div>

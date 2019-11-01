@@ -17,7 +17,6 @@ class TUsersController extends Controller
      */
     public function index()
     {
-        //$otdels = TOtdels::with('getUsers.getPost:id,post')->get()->sortBy('id');
         $otdels = TOtdels::with('getUsers.getPost:id,post')->get()->sortBy('id');
         return view('admin.users.index', compact('otdels'));
     }
@@ -83,7 +82,7 @@ class TUsersController extends Controller
     public function update(Request $request, $id)
     {
         TUsers::findOrFail($id)->update($request->all());
-        return redirect()->route('admin.users.index');
+        return redirect()->route('admin.users.index')->with('success', 'Record updated!');
     }
 
     /**
@@ -95,6 +94,6 @@ class TUsersController extends Controller
     public function destroy($id)
     {
         TUsers::destroy($id);
-        return redirect()->route('admin.users.index');
+        return redirect()->route('admin.users.index')->with('success', 'Record success deleted!');
     }
 }
