@@ -6,10 +6,10 @@ a.menu-item{
 }
 a.menu-item:hover {
     /*color: lawngreen !important;*/
-    background: #4b9500 !important;
+    background: #0b0a09 !important;
 }
 a.menu-item:hover:active {
-    color: greenyellow !important;
+    color: #8b8f8f !important;
 }
 
 .card {
@@ -32,6 +32,9 @@ th,td {
     font-size: 150%;
 }
 
+div.search {
+    width: 300px !important;
+}
 /*body {*/
 /*    color: #fff;*/
 /*    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);*/

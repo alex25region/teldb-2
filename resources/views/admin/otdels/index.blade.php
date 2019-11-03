@@ -2,16 +2,7 @@
 
 @section('content')
     @include('admin.layouts.messages')
-    <form>
-        <div class="row justify-content-end mb-3">
-            <div class="col-3">
-                <input type="text" class="form-control shadow" placeholder="Search..." aria-label="Search...">
-            </div>
-            <div class="col-2">
-                <a class="btn btn-md btn-success shadow" href="{{route('admin.otdels.create')}}">Add Row</a>
-            </div>
-        </div>
-    </form>
+    @include('admin.layouts.search')
     <div class="row justify-content-center ">
 
         <div class="card shadow">
