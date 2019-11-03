@@ -46,5 +46,17 @@
 </div>
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/bootstrap.js') }}"></script>
+<script>
+    $(function() {
+        $('#search').keyup(function () {
+            var rex = new RegExp($(this).val(), 'i');
+            $('.searchable').hide();
+            $('.searchable').filter(function () {
+                return rex.test($(this).text());
+            }).show().parent().prevUntil('tbody').find('.searchable').show();
+        });
+    });
+</script>
+
 </body>
 </html>

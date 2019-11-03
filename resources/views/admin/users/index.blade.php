@@ -13,8 +13,8 @@
             <div class="card-body">
                 <table class="table table-sm table-bordered table-striped table-hover text-center">
                     @foreach($otdels as $otdel)
-                        <thead>
-                            <tr class="thead-dark">
+                        <thead class="parent-th">
+                            <tr class="thead-dark searchable">
                                 <th colspan="8">
                                     <div class=" m-2 big" > {{ $otdel->otdel }}
                                         <span class="badge badge-success"><i class="fa fa-user"></i>&nbsp;{{$otdel->getUsers->count()}}</span>
@@ -22,15 +22,14 @@
                                         <span class="badge badge-primary"><i class="fa fa-pen"></i>&nbsp;Edit</span>
                                         </a>
                                     </div>
-
 {{--                                    <div class="small">{{ $otdel->address }} </div>--}}
 {{--                                    <div class="small">{{ $otdel->telefon }} </div>--}}
 {{--                                    <div class="small">{{ $otdel->email }} </div>--}}
                                 </th>
                             </tr>
                         </thead>
-                       <thead>
-                       <tr class="thead-dark">
+                       <thead class="parent-th">
+                       <tr class="thead-dark searchable">
                             <th>ID</th>
                             <th>Фамилия</th>
                             <th>Имя</th>
@@ -44,7 +43,7 @@
                         </thead>
                         <tbody>
                         @foreach($otdel->getUsers as $user)
-                            <tr>
+                            <tr class="searchable">
                                 <td>{{ $user->id }}</td>
                                 <td>{{ $user->surname}}</td>
                                 <td>{{ $user->firstname }}</td>
@@ -68,13 +67,6 @@
                                             </button>
                                         </form>
                                     </div>
-                                    {{--                                        <a href="{{ route('admin.users.show', $user->id)}}" class="btn btn-sm btn-primary btn-block shadow">Show</a>
-                                                                                <a href="{{ route('admin.users.edit', $user->id)}}" class="btn btn-sm btn-primary btn-block">Edit</a>
-                                                                                <form action="{{ route('admin.users.destroy', $user->id) }}" method="post">
-                                                                                @csrf
-                                                                                @method('DELETE')
-                                                                                <input type="submit" class="btn btn-sm btn-block btn-danger" value="Delete" onclick="return confirm('Are you sure?')"/>
-                                                                                </form>--}}
                                 </td>
                             </tr>
                         @endforeach

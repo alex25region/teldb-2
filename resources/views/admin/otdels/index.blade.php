@@ -11,6 +11,7 @@
             </div>
             <div class="card-body">
                 <table class="table table-bordered table-striped table-hover text-center">
+
                     <tr class="thead-dark">
                         <th>ID</th>
                         <th>Отдел</th>
@@ -21,8 +22,9 @@
                         <th>Изменен</th>
                         <th>Действия</th>
                     </tr>
+                    <tbody>
                     @forelse($otdels as $otdel)
-                        <tr>
+                        <tr class="searchable">
                             <td> {{ $otdel->id }} </td>
                             <td> {{ $otdel->otdel }} </td>
                             <td> {{ $otdel->address }} </td>
@@ -51,9 +53,11 @@
                             <td colspan="8">Нет записей</td>
                         </tr>
                     @endforelse
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
+
 
 @endsection
