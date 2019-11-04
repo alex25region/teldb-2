@@ -3,7 +3,7 @@
         <div class="input-group mr-2 w-auto shadow search">
             <input type="text" class="form-control " placeholder="Search..." id="search" autofocus />
             <div class="input-group-append">
-                <button class="btn btn-secondary" type="button">
+                <button class="btn btn-secondary clear" type="reset">
                     <i class="fa fa-times"></i>
                 </button>
             </div>
