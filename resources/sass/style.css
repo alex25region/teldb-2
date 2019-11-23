@@ -11,7 +11,6 @@ a.menu-item:hover {
 a.menu-item:hover:active {
     color: #8b8f8f !important;
 }
-
 .card {
     opacity: 0.93;
 }
@@ -35,8 +34,10 @@ th,td {
 div.search {
     width: 300px !important;
 }
-/*body {*/
-/*    color: #fff;*/
-/*    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);*/
-/*}*/
 
+.notfound{
+    display: none;
+}
+table {
+    table-layout:fixed;
+}

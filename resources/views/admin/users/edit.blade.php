@@ -63,10 +63,7 @@
                                 </div>
                                 <div class="form-group text-right d-block">
                                     <input type="submit" class="btn btn-lg btn-primary" value="Update"/>
-
-                                    <a href="{{ route('admin.users.index') }}">
-                                       <button  class="btn btn-lg btn-danger">Back</button>
-                                       </a>
+                                    <a href="{{ route('admin.users.index') }}" class="btn btn-lg btn-danger">Back</a>
                                 </div>
                             </form>
                         </div>

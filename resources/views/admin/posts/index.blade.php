@@ -12,7 +12,7 @@
             <div class="card-body">
                 <table class="table table-bordered table-striped table-hover text-center">
                     <thead>
-                        <tr class="thead-dark searchable">
+                        <tr class="thead-dark">
                             <th>ID</th>
                             <th>Должность</th>
                             <th>Создан</th>
@@ -45,10 +45,11 @@
                             </td>
                         </tr>
                     @empty
-                        <tr>
-                            <td colspan="5">Нет записей</td>
-                        </tr>
+
                     @endforelse
+                    <tr class='notfound'>
+                        <td colspan="5">Нет записей</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
