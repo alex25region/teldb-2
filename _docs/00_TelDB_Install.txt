@@ -10,6 +10,7 @@
 Выбираем папку, запускаем gitbash.
 
 composer create-project --prefer-dist laravel/laravel Laravel-TELDB
+composer create-project --prefer-dist laravel/laravel Laravel-TELDB "5.8.*"
 ---
 
 ##### === НАСТРОЙКА PHPSTORM === #####
@@ -17,12 +18,12 @@ composer create-project --prefer-dist laravel/laravel Laravel-TELDB
 2. Установка **laravel-ide-helper**
 
 	Для подстановки команд на классах и фасадах Laravel, так как php strom не понимает их (Например, класс Route).
-	
+
 	Проект: https://github.com/barryvdh/laravel-ide-helper
 
 		composer require --dev barryvdh/laravel-ide-helper
 		php artisan ide-helper:generate
-        
+
 	Чтобы руками не вводить постоянно при добавлении какого-нибудь фасада:
 
 		You can configure your composer.json to do this after each commit:
@@ -36,30 +37,30 @@ composer create-project --prefer-dist laravel/laravel Laravel-TELDB
 		},
 
 	Делаем публикацию, при которой из папки vendor копируется файл в папку config:
-	
+
 		php artisan vendor:publish --provider="Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider" --tag=config
 
 	Открываем config\ide-helper.php
 	Меняем на true:
-	
+
 		'include_fluent' => true,
 
 3. Ставим DebugPanel
 
 	Проект: https://github.com/barryvdh/laravel-debugbar
-	
+
 		composer require barryvdh/laravel-debugbar --dev
 
 	Проверить на сайте появление дебаг-панели. Если не появилась, то необходимо добавить в config/app.php:
-	
+
 		Barryvdh\Debugbar\ServiceProvider::class,
 
 	If you want to use the facade to log messages, add this to your facades in app.php:
-	
+
 		'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
 	Как отключить:
-	
+
 		The profiler is enabled by default, if you have APP_DEBUG=true. You can override that in the config (debugbar.enabled) or by setting DEBUGBAR_ENABLED in your .env. See more options in config/debugbar.php
 
 4. Зайти в меню phpstorm -> Settings -> Directories

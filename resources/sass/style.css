@@ -39,5 +39,5 @@ div.search {
     display: none;
 }
 table {
-    table-layout:fixed;
+    table-layout:inherit;
 }
