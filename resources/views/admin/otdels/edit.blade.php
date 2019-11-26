@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('content')
-
+    @include('admin.layouts.messages')
         <div class="row justify-content-center">
             <div class="col-md-6">
 
@@ -19,6 +19,9 @@
                                 <div class="form-group">
                                     <label for="otdel">Отдел</label>
                                     <input type="text" class="form-control" id="otdel" name="otdel" value="{{$otdel->otdel}}"/>
+                                    @if ($errors->has('otdel'))
+                                        <span class="text-danger">{{ $errors->first('otdel') }}</span>
+                                    @endif
                                 </div>
                                 <div class="form-group">
                                     <label for="address">Адрес</label>

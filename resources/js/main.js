@@ -39,8 +39,6 @@ $.expr[":"].contains = $.expr.createPseudo(function(arg) {
 //-----------------------------------------------------------------------------------
 // Очистка строки поиска (сброс поиска)
 $("#clear").on("click", function(){
-    //code here
-    console.log('asdasdad');
     $('#searchform')[0].reset();
     $('.searchable').show();
     $('.notfound').hide();

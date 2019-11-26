@@ -29,8 +29,8 @@
                        <tr class="thead-dark searchable">
                             <th>ID</th>
                             <th>ФИО</th>
-{{--                            <th>Имя</th>--}}
-{{--                            <th>Отчество</th>--}}
+                            {{--<th>Имя</th>--}}
+                            {{--<th>Отчество</th>--}}
                             <th>Должность</th>
                             <th>IP-телефон</th>
                             <th>Телефон</th>
@@ -43,8 +43,8 @@
                             <tr class="searchable">
                                 <td>{{ $user->id }}</td>
                                 <td>{{ $user->surname}} {{ $user->firstname }} {{ $user->secondname }}</td>
-{{--                                <td>{{ $user->firstname }}</td>--}}
-{{--                                <td>{{ $user->secondname }}</td>--}}
+                                {{--<td>{{ $user->firstname }}</td>--}}
+                                {{--<td>{{ $user->secondname }}</td>--}}
                                 <td>{{ $user->getPost->post }}</td>
                                 <td>{{ $user->iptel }}</td>
                                 <td>{{ $user->tel}}</td>
@@ -69,7 +69,7 @@
                         @endforeach
                         @endforeach
                         <tr class='notfound'>
-                            <td colspan="8">Нет записей</td>
+                            <td colspan="6">Нет записей</td>
                         </tr>
                         </tbody>
                 </table>

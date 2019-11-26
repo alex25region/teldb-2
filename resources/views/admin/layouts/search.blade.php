@@ -8,6 +8,15 @@
                 </button>
             </div>
         </div>
-        <a class="btn  btn-success shadow " href="{{route('admin.otdels.create')}}">Add Row</a>
+        {{--<a class="btn  btn-success shadow " href="{{route('admin.otdels.create')}}">Add Row</a>--}}
+
+        @if(url()->current() == route('admin.users.index'))
+            <a class="btn  btn-success shadow " href="{{route('admin.users.create')}}">Add User</a>
+        @elseif(url()->current() == route('admin.posts.index'))
+            <a class="btn  btn-success shadow " href="{{route('admin.posts.create')}}">Add Post</a>
+        @elseif(url()->current() == route('admin.otdels.index'))
+            <a class="btn  btn-success shadow " href="{{route('admin.otdels.create')}}">Add Otdel</a>
+        @endif
+
     </div>
 </form>

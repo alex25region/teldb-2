@@ -38,6 +38,7 @@ div.search {
 .notfound{
     display: none;
 }
-table {
-    table-layout:inherit;
-}
+/*table {*/
+/*    table-layout:fixed;*/
+/*}*/
+

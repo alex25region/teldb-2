@@ -23,6 +23,12 @@ class TPostsController extends Controller
     {
         //TPosts::create($request->all());
         //return redirect()->route('admin.posts.index');
+
+        $rules = [
+            'post' => 'required|string|unique:t_posts|min:5|max:100',
+        ];
+        $this->validate($request, $rules);
+
         $newpost = new TPosts($request->all());
         $newpost->save();
         return redirect()->route('admin.posts.index');
@@ -41,8 +47,24 @@ class TPostsController extends Controller
 
     public function update(Request $request, $id)
     {
-        TPosts::findOrFail($id)->update($request->all());
-        return redirect()->route('admin.posts.index')->with('success', 'Record updated!');
+
+        $rules = [
+            'post' => 'required|string|min:5|max:100',
+        ];
+        $this->validate($request, $rules);
+
+        $post = TPosts::findOrFail($id)->fill($request->all());
+
+        // Проверка измененных данных (isDirty). Если что-то поменялось -> update, если не поменялось -> то ничего не делать:
+        if($post->isDirty()) {
+            $post->update();
+            return redirect()->route('admin.posts.index')->with('success', 'Record was updated!');
+        }
+        else {
+            return redirect()->route('admin.posts.index')->with('message', 'Nothing update!');
+        }
+
+
     }
 
     public function destroy($id)

@@ -2,28 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\TOtdelsCreateRequest;
+use App\Http\Requests\TOtdelsUpdateRequest;
 use App\Models\TOtdels;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class TOtdelsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $otdels = TOtdels::all();
             return view ('admin.otdels.index',compact('otdels'))->with('failure', 'asdsad');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         /*$otdels = TOtdels::all();
@@ -31,53 +23,37 @@ class TOtdelsController extends Controller
         return view ('admin.otdels.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(TOtdelsCreateRequest $request)
     {
         TOtdels::create($request->all());
         return redirect()->route('admin.otdels.index');
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $otdel = TOtdels::findOrFail($id);
         return view ('admin.otdels.edit', compact('otdel'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(TOtdelsUpdateRequest $request, $id)
     {
-        TOtdels::findOrFail($id)->update($request->all());
-        return redirect()->route('admin.otdels.index')->with('success', 'Record updated!');
+
+        $otdel = TOtdels::findOrFail($id)->fill($request->all());
+
+        // Проверка измененных данных (isDirty). Если что-то поменялось -> update, если не поменялось -> то ничего не делать:
+        if($otdel->isDirty()) {
+            $otdel->update();
+            return redirect()->route('admin.otdels.index')->with('success', 'Record was updated!');
+        }
+        else {
+            return redirect()->route('admin.otdels.index')->with('message', 'Nothing update!');
+        }
     }
 
     /**

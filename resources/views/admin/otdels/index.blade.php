@@ -28,7 +28,7 @@
                         <tr class="searchable">
                             <td> {{ $otdel->id }} </td>
                             <td> {{ $otdel->otdel }} </td>
-                            <td class="td1"> {{ $otdel->address }} </td>
+                            <td> {{ $otdel->address }} </td>
                             <td> {{ $otdel->telefon }} </td>
                             <td> {{ $otdel->email }} </td>
                             <td> {{ $otdel->created_at }} </td>

@@ -1,0 +1,252 @@
+=== Валидация данных и форм ===
+
+1 способ - с помощью создания файлов Request
+2 способ -
+3 способ -
+
+Отображения ошибок в шаблонах blade.
+
+1 способ - создать отдельный blade в assets - например resources/views/admin/layouts/messages.blade.php,
+вставить данный blade в неоходимый blade (там, где необходимо выводить ошибки):
+@include('admin.layouts.messages')
+
+Содержимое messages.blade.php:
+----------------------------------------------------------------------------------------------
+{{--Сообщение об ошибке--}}
+@if($errors->any())
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </div>
+        </div>
+    </div>
+@endif
+
+{{--Сообщение об успешности--}}
+@if(session('success'))
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;﻿</span>
+                </button>
+                <strong>{{ session()->get('success') }}</strong>
+            </div>
+        </div>
+    </div>
+@endif
+----------------------------------------------------------------------------------------------
+
+2 способ для каждого input прописывать span, например:
+
+<div class="form-group">
+<label for="otdel">Отдел</label>
+<input type="text" class="form-control" id="otdel" name="otdel" value="{{$otdel->otdel}}"/>
+    @if ($errors->has('otdel'))
+        <span class="text-danger">{{ $errors->first('otdel') }}</span>
+    @endif
+</div>
+
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+1 СПОСОБ ВАЛИДАЦИИ:
+-------------------
+
+С помощью создания Request, на примере TOtdels.
+
+Создаем 2 Request:
+php artisan make:request TOdtelsCreateRequest
+php artisan make:request TOtdelsUpdateRequest
+
+Находятся в папке: app/Http/Requests
+
+Разница лишь в проверке уникальности при создании (метод store), в методе update это не нужно,
+так как иде обновление записи и проверка на уникальность не требуется!
+
+Содержимое TOdtelsCreateRequest:
+----------------------------------------------------------------------------------------------
+<?php
+namespace App\Http\Requests;
+use Illuminate\Foundation\Http\FormRequest;
+
+class TOtdelsCreateRequest extends FormRequest
+{
+    public function authorize()
+    {
+        // false - Обязательная авторизация
+        // true - Авторизация не требуется
+        return true;
+    }
+
+    public function rules()
+    {
+
+        /*
+        Поля в БД:
+            'otdel'
+            'address'
+            'telefon'
+            'email'
+        */
+        return [
+            'otdel' => 'required|string|unique:t_otdels|min:2|max:200',
+            'address' => 'required|min:2|max:200',
+            'telefon' => 'required|min:2|max:200',
+            'email' => 'required|email',
+        ];
+    }
+
+    // Перевод атрибутов:
+    public function attributes()
+    {
+        // resource\lang\validation
+        return [
+            'otdel' => 'Отдел',
+            'address' => 'Адрес',
+            'telefon' => 'Телефон'
+
+        ];
+    }
+
+    // Перевод сообщения или свои значения:
+    public function messages()
+    {
+        return [
+            'otdel.unique' => 'Отдел должен быть уникален!',
+            'address.required'  => 'Адрес обязателен!',
+        ];
+    }
+
+}
+----------------------------------------------------------------------------------------------
+
+Содержимое TOtdelsUpdateRequest:
+----------------------------------------------------------------------------------------------
+<?php
+namespace App\Http\Requests;
+use Illuminate\Foundation\Http\FormRequest;
+
+class TOtdelsUpdateRequest extends FormRequest
+{
+    public function authorize()
+    {
+        // false - Обязательная авторизация
+        // true - Авторизация не требуется
+        return true;
+    }
+
+    public function rules()
+    {
+
+        /*
+        Поля в БД:
+            'otdel'
+            'address'
+            'telefon'
+            'email'
+        */
+        return [
+            'otdel' => 'required|string|min:2|max:200',
+            'address' => 'required|min:2|max:200',
+            'telefon' => 'required|min:2|max:200',
+            'email' => 'required|email',
+        ];
+    }
+
+    // Перевод атрибутов:
+    public function attributes()
+    {
+        // resource\lang\validation
+        return [
+            'otdel' => 'Отдел',
+            'address' => 'Адрес',
+            'telefon' => 'Телефон'
+
+        ];
+    }
+
+    // Перевод сообщения или свои значения:
+    public function messages()
+    {
+        return [
+            'otdel.unique' => 'Отдел должен быть уникален!',
+            'address.required'  => 'Адрес обязателен!',
+        ];
+    }
+}
+----------------------------------------------------------------------------------------------
+
+После создания Request необходимо поправить контроллер в части методолв store и update (там где используется Request)!
+
+Часть изменяемого содержимого:
+----------------------------------------------------------------------------------------------
+...
+public function store(TOtdelsCreateRequest $request)
+    {
+        TOtdels::create($request->all());
+        return redirect()->route('admin.otdels.index');
+
+    }
+...
+public function update(TOtdelsUpdateRequest $request, $id)
+    {
+        TOtdels::findOrFail($id)->update($request->all());
+        return redirect()->route('admin.otdels.index')->with('success', 'Record updated!');
+    }
+...
+----------------------------------------------------------------------------------------------
+
+2 СПОСОБ ВАДИДАЦИИ:
+-------------------
+
+Самый простой.
+На примере TPosts. Если при проверке будет ошибка, то laravel внесет его в массив $errors.
+
+В app/Http/Controllers/Admin/TPostsController.php в методе store и update прописать:
+----------------------------------------------------------------------------------------------
+....
+    public function store(Request $request)
+    {
+        //TPosts::create($request->all());
+        //return redirect()->route('admin.posts.index');
+
+        $rules = [
+            'post' => 'required|string|unique:t_posts|min:5|max:100',
+        ];
+        $this->validate($request, $rules);
+
+        $newpost = new TPosts($request->all());
+        $newpost->save();
+        return redirect()->route('admin.posts.index');
+    }
+
+...
+    public function update(Request $request, $id)
+    {
+        $rules = [
+            'post' => 'required|string|min:5|max:100',
+        ];
+        $this->validate($request, $rules);
+
+        TPosts::findOrFail($id)->update($request->all());
+        return redirect()->route('admin.posts.index')->with('success', 'Record updated!');
+    }
+...
+----------------------------------------------------------------------------------------------
+
+
+3 СПОСОБ ВАДИДАЦИИ:
+-------------------
+
+Использование (создание) Validator.
+
+Не использовал!
