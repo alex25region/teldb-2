@@ -1,0 +1,26 @@
+При методе Update сделал проверку на изменяемые данные.
+
+Напримере Update отдела:
+
+Содержимое контроллера app/Http/Controllers/Admin/TOtdelsController.php:
+-----------------------------------------------------------------------------------------------------------------------------------
+...
+    public function update(TOtdelsUpdateRequest $request, $id)
+    {
+        // Поиск и заполение модели атрибутами:
+        $otdel = TOtdels::findOrFail($id)->fill($request->all());
+
+        // Проверка измененных данных (isDirty). Если что-то поменялось -> update, если не поменялось -> то ничего не делать:
+        if($otdel->isDirty()) {
+            $otdel->update();
+            return redirect()->route('admin.otdels.index')->with('success', 'Record was updated!');
+        }
+        else {
+            return redirect()->route('admin.otdels.index')->with('message', 'Nothing update!');
+        }
+    }
+...
+-----------------------------------------------------------------------------------------------------------------------------------
+
+Есть команда getDirty(), для просмотра изменений.
+Также можно попробовать команду $otdel->getChanges();

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\TOtdelsCreateRequest;
 use App\Http\Requests\TOtdelsUpdateRequest;
 use App\Models\TOtdels;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class TOtdelsController extends Controller
@@ -13,13 +12,11 @@ class TOtdelsController extends Controller
     public function index()
     {
         $otdels = TOtdels::all();
-            return view ('admin.otdels.index',compact('otdels'))->with('failure', 'asdsad');
+        return view ('admin.otdels.index', compact('otdels'));
     }
 
     public function create()
     {
-        /*$otdels = TOtdels::all();
-        return view ('admin.otdels.create',compact('otdels'));*/
         return view ('admin.otdels.create');
     }
 
@@ -56,16 +53,23 @@ class TOtdelsController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        TOtdels::destroy($id);
-        return redirect()->route('admin.otdels.index')->with('success', 'Record success deleted!');
+//        if (TOtdels::destroy($id)) {
+//        return redirect()->route('admin.otdels.index')->with('success', 'Record success deleted!');
+//        }
+//        else {
+//            return __METHOD__;
+//        }
+
+        $deleted = TOtdels::destroy($id);
+
+        if ($deleted) {
+            return back()->with('success', 'Record success deleted!');
+        } else {
+            return back()->with('error', 'Record NOT deleted!');
+        }
+
 
     }
 }

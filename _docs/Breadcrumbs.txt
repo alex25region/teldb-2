@@ -1,0 +1,63 @@
+Хлебные крошки
+
+https://github.com/davejamesmiller/laravel-breadcrumbs
+
+Установка:
+
+composer require davejamesmiller/laravel-breadcrumbs:5.x
+
+
+php artisan vendor:publish --tag=breadcrumbs-config
+
+Открыть config/breadcrumbs.php -> Выбрать стиль отображения (если не bootstrap4):
+    'view' => 'breadcrumbs::bootstrap4',
+
+
+Далее создаем файл routes/breadcrumbs.php
+Тут регистрируем breadcrumbs.
+
+Пример:
+
+-----------------------------------------------------------------------------------------
+<?php
+
+use App\Models\Protokol;
+
+Breadcrumbs::for('admin', function ($trail) {
+    $trail->push('Home', route('admin.dashboard'));
+});
+
+// resources/views/admin/protokols/index.blade.php
+Breadcrumbs::for('protokols', function ($trail) {
+    $trail->parent('admin');
+    $trail->push('Protokols', route('admin.protokols.index'));
+});
+
+// resources/views/admin/protokols/show.blade.php
+Breadcrumbs::for('protokol', function ($trail, $prot) {
+
+    //dd($prot);
+    //$p = \App\Models\Protokol::where
+    $p = Protokol::find($prot);
+    $trail->parent('protokols');
+    $trail->push('Protokol ' . $p->KodProtokol, route('admin.protokols.show', $prot));
+
+});
+
+
+Breadcrumbs::for('questions', function ($trail, $prot ) {
+
+    //dd($prot);
+    $trail->parent('protokol', $prot);
+    $trail->push('Questions' , route('admin.protokols.questions.index', $prot));
+});
+
+-----------------------------------------------------------------------------------------
+
+А в самих blade-шаблонах добавляем:
+
+{{ Breadcrumbs::render('protokols') }}
+
+Если с передачей парметров, то так:
+
+{{ Breadcrumbs::render('protokol', $prot) }}
